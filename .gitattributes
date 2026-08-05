@@ -1,0 +1,14 @@
+# Normalise text in the repo, check out with native line endings.
+* text=auto
+
+# Must stay LF or the shell wrapper breaks on Unix.
+gradlew         text eol=lf
+*.sh            text eol=lf
+
+# Windows-only, keep CRLF.
+gradlew.bat     text eol=crlf
+
+# Never touch binaries.
+*.jar           binary
+*.png           binary
+*.zip           binary

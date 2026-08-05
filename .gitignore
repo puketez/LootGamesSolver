@@ -1,0 +1,38 @@
+# Gradle / build output
+.gradle/
+build/
+out/
+bin/
+
+# RFG / Forge run + decomp workspace
+run/
+runClient/
+runServer/
+logs/
+*.log
+
+# IDE / tooling
+.idea/
+*.iml
+*.ipr
+*.iws
+.settings/
+.classpath
+.project
+.vscode/
+.junie/
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local dev-only artifacts (not part of the release)
+deploy.sh
+gtnh-test
+TODO.md
+msolver-project.zip
+
+# LootGames is a third-party dependency — don't redistribute its jar
+lootgames-*.jar
+*-dev.jar

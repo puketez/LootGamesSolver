@@ -1,0 +1,90 @@
+// LGSolver — solver overlay + puzzle tracer for GTNH LootGames.
+// Uses RetroFuturaGradle (RFG), the GTNH-maintained fork of ForgeGradle 1.2
+// that lets you build 1.7.10 mods on a modern Gradle/Java toolchain.
+
+plugins {
+    id 'com.gtnewhorizons.retrofuturagradle' version '1.4.6'
+    id 'java-library'
+    id 'idea'
+    id 'eclipse'
+}
+
+group = 'net.puket'
+version = project.hasProperty('modVersion') ? project.modVersion : '1.0.0'
+archivesBaseName = 'lgsolver'
+
+java {
+    // 1.7.10 mods run on Java 8 bytecode; RFG lets Gradle itself use a newer JDK.
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+minecraft {
+    mcVersion = '1.7.10'
+    // Use the standard SRG/MCP mapping bundled with RFG.
+    useDependencyAccessTransformers = true
+    // Comment this out if you don't have a GTNH dev account configured;
+    // RFG will fall back to public MCP mappings.
+    injectMissingGenerics = true
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name 'GTNH Maven'
+        url 'https://nexus.gtnewhorizons.com/repository/public/'
+    }
+    maven {
+        name 'JitPack'
+        url 'https://jitpack.io'
+    }
+}
+
+configurations {
+    // LootGames goes here — present at compile-time, absent at runtime is OK.
+    compileOnlyLootGames
+    compileOnly.extendsFrom compileOnlyLootGames
+    testImplementation.extendsFrom compileOnlyLootGames
+}
+
+dependencies {
+    // LootGames is compile-only. Bump the coordinate to match the LootGames
+    // version in the modpack you target; GTNH publishes under GTNewHorizons.
+    compileOnlyLootGames 'com.github.GTNewHorizons:LootGames:2.2.14:dev'
+
+    compileOnly 'org.jetbrains:annotations:24.1.0'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+processResources {
+    def mcVer = minecraft.mcVersion.get()
+    inputs.property 'version', project.version
+    inputs.property 'mcversion', mcVer
+
+    filesMatching('mcmod.info') {
+        expand 'version': project.version, 'mcversion': mcVer
+    }
+}
+
+jar {
+    // LGPL requires the licence to travel with the binary.
+    from(rootDir) {
+        include 'LICENSE', 'COPYING'
+    }
+    manifest {
+        // No FMLCorePluginContainsFMLMod here: this jar ships no coremod, and
+        // claiming otherwise makes FML treat it as an IFMLLoadingPlugin candidate.
+        attributes(
+            'Implementation-Title': archivesBaseName,
+            'Implementation-Version': project.version
+        )
+    }
+}

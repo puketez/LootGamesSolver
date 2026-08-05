@@ -1,0 +1,16 @@
+[
+  {
+    "modid": "lgsolver",
+    "name": "LGSolver",
+    "description": "Client-side solver overlay for GTNH LootGames. On Minesweeper it paints hints (green = safe, red = mine, yellow = risky guess) using constraint propagation and probability enumeration. On Simon Says (Game of Light) it captures the flashed sequence and highlights the next cell to click. It also adds a through-wall tracer/ESP that points you to LootGames puzzle-master blocks within render distance. Hint-only: it never clicks or sends packets for you.",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "logoFile": "/logo.png",
+    "url": "https://puket.net",
+    "authorList": ["Puket"],
+    "credits": "Solver based on classic Minesweeper constraint-satisfaction techniques.",
+    "dependencies": ["after:lootgames"],
+    "required": false,
+    "useDependencyInformation": true
+  }
+]
