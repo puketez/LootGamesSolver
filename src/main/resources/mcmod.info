@@ -6,7 +6,7 @@
     "version": "${version}",
     "mcversion": "${mcversion}",
     "logoFile": "/logo.png",
-    "url": "https://puket.net",
+    "url": "https://github.com/puketez/LootGamesSolver",
     "authorList": ["Puket"],
     "credits": "Solver based on classic Minesweeper constraint-satisfaction techniques.",
     "dependencies": ["after:lootgames"],

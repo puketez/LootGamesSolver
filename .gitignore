@@ -6,8 +6,6 @@ bin/
 
 # RFG / Forge run + decomp workspace
 run/
-runClient/
-runServer/
 logs/
 *.log
 
